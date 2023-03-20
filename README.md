@@ -12,9 +12,7 @@ Stock replenishment: The system should have the capability to generate purchase 
 
 - Order management: The system should handle the processing of customer orders, including order placement, order tracking, and order fulfillment.
 
-- Barcode/RFID scanning: The system should support barcode or RFID scanning capabilities to efficiently update inventory levels and track item movements.
-
-Stock movement and transfers: The system should allow for recording and tracking of stock movements, such as transfers between locations, returns, and adjustments.
+- Stock movement and transfers: The system should allow for recording and tracking of stock movements, such as transfers between locations, returns, and adjustments.
 
 - Real-time inventory visibility: The system should provide real-time visibility into current inventory levels, allowing users to quickly determine stock availability.
 
