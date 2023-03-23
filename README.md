@@ -8,7 +8,7 @@
 
 - Inventory tracking: The system should be able to track and record inventory levels accurately, including quantities, locations, and status (e.g., in stock, out of stock).
 
-Stock replenishment: The system should have the capability to generate purchase orders or replenishment requests based on predefined reorder points or minimum stock levels.
+- Stock replenishment: The system should have the capability to generate purchase orders or replenishment requests based on predefined reorder points or minimum stock levels.
 
 - Order management: The system should handle the processing of customer orders, including order placement, order tracking, and order fulfillment.
 
