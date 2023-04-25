@@ -83,3 +83,36 @@
 - Alerts and notifications: Send automated alerts and notifications for critical events such as low stock levels or order delays.
 - Mobile access: Support mobile-friendly interface or dedicated mobile app for on-the-go inventory management.
 - Multi-location support: Manage inventory across multiple warehouses or storage locations.
+
+## How to Run StoreMate (For Developers)
+
+### Installation
+
+1. Clone the repository:
+   `https://github.com/blinxcorporation/StoreMate-API`
+2. Install the necessary dependencies:
+
+```
+cd inventory-management-system
+npm install
+```
+
+3. Configure the database connection and other settings in the `config` file.
+4. Start the application:
+5. Access the application in your browser at `http://localhost:3000`.
+
+## Technologies Used
+
+- Programming Language: [JavaScript]
+- Backend Framework: [Node.js]
+- Frontend Framework: [React]
+- Database: [MySQL]
+- Additional Libraries and Tools: [Express.js, Redux, Bootstrap]
+
+## Contributing
+
+Contributions to the Inventory Management System are welcome! If you find any bugs or have suggestions for new features, please open an issue or submit a pull request.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
