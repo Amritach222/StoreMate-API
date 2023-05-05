@@ -106,8 +106,8 @@ npm install
 - Programming Language: [JavaScript]
 - Backend Framework: [Node.js]
 - Frontend Framework: [React]
-- Database: [MySQL]
-- Additional Libraries and Tools: [Express.js, Redux, Bootstrap]
+- Database: [MongoDB]
+- Additional Libraries and Tools: [Express.js, Bootstrap]
 
 ## Contributing
 
