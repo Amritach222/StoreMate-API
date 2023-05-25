@@ -22,6 +22,24 @@
 - Mobile access: Support mobile-friendly interface or dedicated mobile app for on-the-go inventory management.
 - Multi-location support: Manage inventory across multiple warehouses or storage locations.
 
+### System Requirements
+
+- To run the Inventory Management System, the following minimum hardware and software requirements should be met:
+
+#### Hardware Requirements
+
+- Processor: Intel Core i5 or equivalent
+- Memory: 8GB RAM or higher
+- Storage: Minimum 100GB of free disk space
+- Network: Stable internet connection
+
+#### Software Requirements
+
+- Operating System: Windows 10, macOS Mojave (10.14) or later, or a modern Linux distribution (e.g., Ubuntu 18.04 LTS)
+- Web Server: Node.js (version 12 or later)
+- Database: MySQL (version 5.7 or later)
+- Browser: Google Chrome (latest version), Mozilla Firefox (latest version), or Safari (latest version)
+
 ## How to Run StoreMate (For Developers)
 
 ### Installation
