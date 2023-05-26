@@ -40,6 +40,49 @@
 - Database: MySQL (version 5.7 or later)
 - Browser: Google Chrome (latest version), Mozilla Firefox (latest version), or Safari (latest version)
 
+### API Documentation
+
+- The Inventory Management System provides a RESTful API that allows developers to interact with the system programmatically. Below is the documentation for the available endpoints, request/response formats, and authentication/authorization mechanisms.
+
+#### Base URL
+
+- The base URL for the API is: https://api.inventorysystem.com
+
+### Authentication
+
+- The API uses token-based authentication. To access the API endpoints, include an Authorization header in your requests with a valid API token.
+
+- Example:
+
+```
+Authorization: Bearer your_api_token
+```
+
+### Endpoints
+
+- GET /api/products
+- Description: Retrieve a list of products.
+- Request: GET /api/products
+- Response: Array of products in JSON format.
+- Example Response:
+
+```
+[
+  {
+    "id": 1,
+    "name": "Product 1",
+    "quantity": 10,
+    "price": 19.99
+  },
+  {
+    "id": 2,
+    "name": "Product 2",
+    "quantity": 5,
+    "price": 29.99
+  }
+]
+```
+
 ## How to Run StoreMate (For Developers)
 
 ### Installation
