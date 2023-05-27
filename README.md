@@ -60,7 +60,7 @@ Authorization: Bearer your_api_token
 
 ### Endpoints
 
-- GET /api/products
+- `GET /api/products`
 - Description: Retrieve a list of products.
 - Request: GET /api/products
 - Response: Array of products in JSON format.
@@ -81,6 +81,34 @@ Authorization: Bearer your_api_token
     "price": 29.99
   }
 ]
+```
+
+- `POST /api/products`
+
+  - Description: Create a new product.
+  - Request: POST /api/products
+  - Request Body: Product object in JSON format.
+  - Response: Newly created product in JSON format.
+
+- Example Request Body:
+
+```
+{
+  "name": "New Product",
+  "quantity": 15,
+  "price": 49.99
+}
+```
+
+- Example Response:
+
+```
+{
+  "id": 3,
+  "name": "New Product",
+  "quantity": 15,
+  "price": 49.99
+}
 ```
 
 ## How to Run StoreMate (For Developers)
