@@ -142,4 +142,4 @@ Contributions to the Inventory Management System are welcome! If you find any bu
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [GNU GENERAL PUBLIC LICENSE](LICENSE).
