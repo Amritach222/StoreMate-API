@@ -18,6 +18,9 @@
   "author": "Benson Makau",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2"
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "slugify": "^1.6.6"
   }
 }
