@@ -1,0 +1,26 @@
+{
+  "name": "storemate-api",
+  "version": "1.0.0",
+  "description": "Inventory Management System with integrated Point of Sale feature to help retailers/shop owners to manage their inventory and track sales on the shops",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "inventory",
+    "inventory",
+    "management",
+    "system",
+    "point",
+    "of",
+    "sale"
+  ],
+  "author": "Benson Makau",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "slugify": "^1.6.6"
+  }
+}
