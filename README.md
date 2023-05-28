@@ -116,7 +116,7 @@ Authorization: Bearer your_api_token
 ### Installation
 
 1. Clone the repository:
-   `https://github.com/blinxcorporation/StoreMate-API`
+   `git clone git@github.com:makaubenson/StoreMate-API.git`
 2. Install the necessary dependencies:
 
 ```
