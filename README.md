@@ -120,7 +120,7 @@ Authorization: Bearer your_api_token
 2. Install the necessary dependencies:
 
 ```
-cd inventory-management-system
+cd StoreMate-API
 npm install
 ```
 
