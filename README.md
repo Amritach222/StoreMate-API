@@ -2,7 +2,7 @@
 
 ## Description
 
-- This is an Inventory Management System with intergarted Point of Sale (POS).
+- This is an Inventory Management System with intergrated Point of Sale (POS) system. This system targets shop owners/ retailers who intent to keep track of their inventory as well as sales from their multiple shops that they own.
 
 ## Features
 
