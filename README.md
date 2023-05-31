@@ -124,7 +124,7 @@ cd StoreMate-API
 npm install
 ```
 
-3. Configure the database connection and other settings in the `config` file.
+3. Edit the `config.env` file and replace the credentials with your own. e.g database connection
 4. Start the application:
 5. Access the application in your browser at `http://localhost:3000`.
 
