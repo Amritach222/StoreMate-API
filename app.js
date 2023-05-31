@@ -1,3 +1,4 @@
+//Import Dependancies
 const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
@@ -11,11 +12,12 @@ if (process.env.NODE_ENV === "development") {
 }
 
 // Configures the application to use the body-parser middleware to parse incoming requests with URL-encoded payload.
-// The extended: false option specifies that the URL-encoded data should be parsed with the classic querystring library.
+// this line of code allows your Express.js application to understand and process data sent from HTML forms.
+//When a form is submitted from a web page, the data is typically sent in URL-encoded format.
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// parse incoming requests with JSON payload. This middleware parses the request body
-// and makes it available in the req.body property of the incoming request object.
+// parse incoming requests with JSON payload.configures middleware in an Express.js application to handle incoming requests with JSON data.
 app.use(bodyParser.json());
 
+// exports the app variable from the current module so that it can be used in other modules.
 module.exports = app;
