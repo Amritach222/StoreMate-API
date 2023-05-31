@@ -26,19 +26,12 @@
 
 - To run the Inventory Management System, the following minimum hardware and software requirements should be met:
 
-#### Hardware Requirements
-
-- Processor: Intel Core i5 or equivalent
-- Memory: 8GB RAM or higher
-- Storage: Minimum 100GB of free disk space
-- Network: Stable internet connection
-
 #### Software Requirements
 
-- Operating System: Windows 10, macOS Mojave (10.14) or later, or a modern Linux distribution (e.g., Ubuntu 18.04 LTS)
+- Operating System: Windows Os, macOS , or a modern Linux distribution
 - Web Server: Node.js (version 12 or later)
-- Database: MySQL (version 5.7 or later)
-- Browser: Google Chrome (latest version), Mozilla Firefox (latest version), or Safari (latest version)
+- Database: MongoDB
+- Browser: Google Chrome (latest version), Mozilla Firefox (latest version), or Safari (latest version) or any other modern browser.
 
 ### API Documentation
 
@@ -46,7 +39,7 @@
 
 #### Base URL
 
-- The base URL for the API is: https://api.inventorysystem.com
+- The base URL for the API is: `''`
 
 ### Authentication
 
@@ -60,55 +53,14 @@ Authorization: Bearer your_api_token
 
 ### Endpoints
 
-- `GET /api/products`
+- `GET /api/v1/products`
 - Description: Retrieve a list of products.
-- Request: GET /api/products
+- Request: GET /api/v1/products
 - Response: Array of products in JSON format.
 - Example Response:
 
 ```
-[
-  {
-    "id": 1,
-    "name": "Product 1",
-    "quantity": 10,
-    "price": 19.99
-  },
-  {
-    "id": 2,
-    "name": "Product 2",
-    "quantity": 5,
-    "price": 29.99
-  }
-]
-```
 
-- `POST /api/products`
-
-  - Description: Create a new product.
-  - Request: POST /api/products
-  - Request Body: Product object in JSON format.
-  - Response: Newly created product in JSON format.
-
-- Example Request Body:
-
-```
-{
-  "name": "New Product",
-  "quantity": 15,
-  "price": 49.99
-}
-```
-
-- Example Response:
-
-```
-{
-  "id": 3,
-  "name": "New Product",
-  "quantity": 15,
-  "price": 49.99
-}
 ```
 
 ## How to Run StoreMate (For Developers)
