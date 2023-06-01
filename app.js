@@ -3,6 +3,8 @@ const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 
+const userRouter = require("./routes/userRoutes");
+
 //create an instance of the Express.js application.
 const app = express();
 
@@ -18,6 +20,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse incoming requests with JSON payload.configures middleware in an Express.js application to handle incoming requests with JSON data.
 app.use(bodyParser.json());
+
+//DEFINE ROUTES
+app.use("/api/v1/users", userRouter);
 
 // exports the app variable from the current module so that it can be used in other modules.
 module.exports = app;
