@@ -26,7 +26,9 @@ exports.signup = async (req, res, next) => {
       },
     });
   } catch (err) {
-    const errorMessage = getErrorMessage(err);
+    const message =
+      "Something Went Wrong. Signup Failed, Please try again later!";
+    const errorMessage = getErrorMessage(err, message);
 
     res.status(500).json({
       status: "error",

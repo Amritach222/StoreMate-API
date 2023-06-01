@@ -1,6 +1,6 @@
-exports.getErrorMessage = function (err) {
+exports.getErrorMessage = function (err, message) {
   if (process.env.NODE_ENV === "development") {
     return err.message;
   }
-  return "Something Went Wrong. Try Again Later!";
+  return message;
 };
