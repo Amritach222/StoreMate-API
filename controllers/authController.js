@@ -1,10 +1,11 @@
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
+const { getErrorMessage } = require("../utils/errorHandler");
 
-//user signup
+//signup user
 exports.signup = async (req, res, next) => {
   try {
-    //create a new user in the MongoDB database
+    // create a new user in the MongoDB database
     const newUser = await User.create({
       firstname: req.body.firstname,
       lastname: req.body.lastname,
@@ -25,9 +26,11 @@ exports.signup = async (req, res, next) => {
       },
     });
   } catch (err) {
+    const errorMessage = getErrorMessage(err);
+
     res.status(500).json({
-      status: "Error!",
-      message: err.message,
+      status: "error",
+      message: errorMessage,
     });
   }
 };
