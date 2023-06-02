@@ -1,6 +1,13 @@
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const { getErrorMessage } = require("../utils/errorHandler");
+const generateVerificationToken = require("../utils/generateToken");
+
+// // Example usage: Set expiration time to 10 minutes
+// const tokenData = generateVerificationToken(10);
+// console.log(tokenData.token); // Access the generated token
+// console.log(tokenData.status); // Access the token status
+// console.log(tokenData.expiration); // Access the token expiration time
 
 //signup user
 exports.signup = async (req, res, next) => {
