@@ -7,6 +7,7 @@ dotenv.config({ path: "./config.env" });
 
 // Function to send an email using cPanel email
 const sendEmail = async (recipient, subject, message) => {
+  const senderName = process.env.SENDER_NAME;
   // Create a transporter with cPanel SMTP settings
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
@@ -21,7 +22,7 @@ const sendEmail = async (recipient, subject, message) => {
   try {
     // Send the email
     const info = await transporter.sendMail({
-      from: process.env.SMTP_USER,
+      from: `"${senderName}" <${process.env.SMTP_USER}>`,
       to: recipient,
       subject: subject,
       html: `<p style="font-size: 16px; color: #333;">${message}</p>`,
