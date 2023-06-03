@@ -88,6 +88,12 @@ npm install
 - Database: [MongoDB]
 - Additional Libraries and Tools: [Express.js, Bootstrap]
 
+## Test Creds Found At:
+
+```
+https://gist.github.com/makaubenson/429c3021221f8ae2881a7ea48714de04
+```
+
 ## Contributing
 
 Contributions to the Inventory Management System are welcome! If you find any bugs or have suggestions for new features, please open an issue or submit a pull request.
