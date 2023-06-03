@@ -1,18 +1,19 @@
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
 const { getErrorMessage } = require("../utils/errorHandler");
-const generateVerificationToken = require("../utils/generateToken");
+const { generateVerificationToken } = require("../utils/generateToken");
+const sendEmail = require("../utils/email");
 
-// // Example usage: Set expiration time to 10 minutes
-// const tokenData = generateVerificationToken(10);
-// console.log(tokenData.token); // Access the generated token
-// console.log(tokenData.status); // Access the token status
-// console.log(tokenData.expiration); // Access the token expiration time
+// Accessing environment variables using the dotenv package
+dotenv.config({ path: "./config.env" });
 
 //signup user
 exports.signup = async (req, res, next) => {
   try {
-    // create a new user in the MongoDB database
+    // Call the generateVerificationToken function using the object reference
+    const tokenData = generateVerificationToken(process.env.tokenExpiryMinutes);
+    //1) create a new user in the MongoDB database
     const newUser = await User.create({
       firstname: req.body.firstname,
       lastname: req.body.lastname,
@@ -21,10 +22,76 @@ exports.signup = async (req, res, next) => {
       role: req.body.role,
       password: req.body.password,
       passwordConfirm: req.body.passwordConfirm,
+      //2) Create verification token and share to email
+      accountVerificationToken: tokenData.token,
+      tokenExpiryDate: new Date(Date.now() + tokenData.expiration * 60000),
     });
 
-    // Additional actions after successful user creation
-    // Send verification email, etc.
+    // ADDITIONAL ACTIONS AFTER SUCCESSFUL USER CREATION
+    // 3) Create a verification link
+    // Retrieve the base URL dynamically
+    const baseURL = `${req.protocol}://${req.get("host")}`;
+    const verificationLink = `${baseURL}/verify?token=${newUser.accountVerificationToken}`;
+
+    //4) Send verification email.
+    const recipient = "bensonmakau2000@gmail.com";
+    const subject = "STOREMATE: Account Verification.";
+    const message = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Welcome to our platform</title>
+      <style>
+      /* Define your styles here */
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.5;
+        color: #333;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      h1 {
+        color: #007bff;
+      }
+      p {
+        margin-bottom: 20px;
+      }
+      .button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+      }
+      .button:hover {
+        background-color: black;
+      }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <h1>Welcome to StoreMate!</h1>
+        <p>Dear ${newUser.firstname}  ${newUser.lastname},</p>
+        <p>Thank you for signing up with our platform. We're excited to have you on board!</p>
+        <p>To get started, please click on the button below to verify your email address:</p>
+        <p><a class="button" href="${verificationLink}"style="color:white;">Verify Email</a></p>
+        <p>If you did not sign up for our platform, please ignore this email.</p>
+        <p>Thank you again, and we look forward to helping you keep track of your inventory as well as sales.</p>
+        <p>Sincerely,</p>
+        <p>Blinx Corporation Team</p>
+      </div>
+    </body>
+    </html>
+  `;
+
+    // Send Email to request verification
+    sendEmail(recipient, subject, message);
 
     res.status(201).json({
       status: "success",

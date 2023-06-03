@@ -56,9 +56,9 @@ const userSchema = new mongoose.Schema({
       message: "The Passwords provided are not the same. Try Again!",
     },
   },
-  passwordChangedAt: Date,
   accountVerificationToken: String,
-  accountVerificationStatus: String,
+  tokenExpiryDate: String,
+  passwordChangedAt: Date,
   passwordResetToken: String,
   passwordResetExpires: Date,
   active: {
