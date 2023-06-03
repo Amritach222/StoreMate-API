@@ -2,6 +2,7 @@ const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const { getErrorMessage } = require("../utils/errorHandler");
 const generateVerificationToken = require("../utils/generateToken");
+const sendEmail = require("../utils/email");
 
 // // Example usage: Set expiration time to 10 minutes
 // const tokenData = generateVerificationToken(10);
@@ -25,6 +26,12 @@ exports.signup = async (req, res, next) => {
 
     // Additional actions after successful user creation
     // Send verification email, etc.
+    const recipient = "bensonmakau2000@gmail.com";
+    const subject = "STOREMATE: Account Verification.";
+    const message =
+      'This is the email content with <a href="https://www.example.com">a link</a>.';
+
+    sendEmail(recipient, subject, message);
 
     res.status(201).json({
       status: "success",

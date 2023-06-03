@@ -32,7 +32,7 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then(() => console.log("Database Connection is Successful!"));
+  .then(() => console.log("Database Connection was Successful!"));
 
 //   set the port on which your Node.js application should listen.
 // i.e actively monitoring that port for incoming network connections. listening for incoming requests on a specific port number.
