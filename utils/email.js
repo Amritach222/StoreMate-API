@@ -1,5 +1,6 @@
 const nodemailer = require("nodemailer");
 const dotenv = require("dotenv");
+const { getErrorMessage } = require("../utils/errorHandler");
 
 // Accessing environment variables using the dotenv package
 dotenv.config({ path: "./config.env" });
@@ -26,9 +27,11 @@ const sendEmail = async (recipient, subject, message) => {
       html: `<p style="font-size: 16px; color: #333;">${message}</p>`,
     });
 
-    console.log("Email sent:", info.response);
+    console.log("Email sent Successfully:", info.response);
   } catch (error) {
-    console.error("Error occurred while sending email:", error);
+    const message = "Something Went Wrong. Email Was not Sent!";
+    const errorMessage = getErrorMessage(err, message);
+    console.error("Error!", errorMessage);
   }
 };
 
