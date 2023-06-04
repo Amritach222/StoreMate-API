@@ -23,6 +23,10 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     validate: [validator.isEmail, "Please provide a valid email address"],
   },
+  isEmailVerified: {
+    type: Boolean,
+    default: false,
+  },
   phone: {
     type: String,
     required: [true, "Please provide your phone number"],
@@ -53,7 +57,7 @@ const userSchema = new mongoose.Schema({
       validator: function (el) {
         return el === this.password;
       },
-      message: "The Passwords provided are not the same. Try Again!",
+      message: "Passwords do not much. Try Again!",
     },
   },
   accountVerificationToken: String,
