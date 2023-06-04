@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const { getErrorMessage } = require("../utils/errorHandler");
 const { generateVerificationToken } = require("../utils/generateToken");
 const sendEmail = require("../utils/email");
+// const { generateExpiryDate } = require("../utils/tokenExpiryDate");
 
 // Accessing environment variables using the dotenv package
 dotenv.config({ path: "./config.env" });
@@ -11,8 +12,12 @@ dotenv.config({ path: "./config.env" });
 //signup user
 exports.signup = async (req, res, next) => {
   try {
-    // Call the generateVerificationToken function using the object reference
+    // Call the generateVerificationToken function using the object reference and generate a verification TOKEN
     const tokenData = generateVerificationToken(process.env.tokenExpiryMinutes);
+
+    //Generate token expiry date (token will expire in 10 minutes time)
+    // const token_expiry_date = generateTokenExpiryDate(10);
+
     //1) create a new user in the MongoDB database
     const newUser = await User.create({
       firstname: req.body.firstname,
@@ -24,7 +29,7 @@ exports.signup = async (req, res, next) => {
       passwordConfirm: req.body.passwordConfirm,
       //2) Create verification token and share to email
       accountVerificationToken: tokenData.token,
-      tokenExpiryDate: new Date(Date.now() + tokenData.expiration * 60000),
+      tokenExpiryDate: tokenData.expiration,
     });
 
     // ADDITIONAL ACTIONS AFTER SUCCESSFUL USER CREATION
@@ -35,6 +40,7 @@ exports.signup = async (req, res, next) => {
 
     //4) Send verification email.
     const recipient = "bensonmakau2000@gmail.com";
+    // const recipient = `${newUser.email}`;
     const subject = "STOREMATE: Account Verification.";
     const message = `
     <!DOCTYPE html>
