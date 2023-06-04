@@ -11,8 +11,9 @@ dotenv.config({ path: "./config.env" });
 //signup user
 exports.signup = async (req, res, next) => {
   try {
-    // Call the generateVerificationToken function using the object reference
+    // Call the generateVerificationToken function using the object reference and generate a verification TOKEN
     const tokenData = generateVerificationToken(process.env.tokenExpiryMinutes);
+
     //1) create a new user in the MongoDB database
     const newUser = await User.create({
       firstname: req.body.firstname,
@@ -22,19 +23,18 @@ exports.signup = async (req, res, next) => {
       role: req.body.role,
       password: req.body.password,
       passwordConfirm: req.body.passwordConfirm,
-      //2) Create verification token and share to email
+      //2) Create verification token and share to users email
       accountVerificationToken: tokenData.token,
-      tokenExpiryDate: new Date(Date.now() + tokenData.expiration * 60000),
+      tokenExpiryDate: tokenData.expiration,
     });
 
-    // ADDITIONAL ACTIONS AFTER SUCCESSFUL USER CREATION
-    // 3) Create a verification link
-    // Retrieve the base URL dynamically
+    // 3) Create a verification link :  Retrieve the base URL dynamically
     const baseURL = `${req.protocol}://${req.get("host")}`;
     const verificationLink = `${baseURL}/verify?token=${newUser.accountVerificationToken}`;
 
     //4) Send verification email.
-    const recipient = "bensonmakau2000@gmail.com";
+    // const recipient = "bensonmakau2000@gmail.com";
+    const recipient = `${newUser.email}`;
     const subject = "STOREMATE: Account Verification.";
     const message = `
     <!DOCTYPE html>
@@ -102,6 +102,84 @@ exports.signup = async (req, res, next) => {
   } catch (err) {
     const message =
       "Something Went Wrong. Signup Failed, Please try again later!";
+    const errorMessage = getErrorMessage(err, message);
+
+    res.status(500).json({
+      status: "error",
+      message: errorMessage,
+    });
+  }
+};
+
+//verify user email
+exports.verify = async (req, res, next) => {
+  const userEmail = req.body.email; // Retrieve email from body
+  const verificationToken = req.query.token; // Retrieve token from query parameters
+
+  try {
+    // Retrieve user information from the database based on the provided email
+    const user = await User.findOne({ email: userEmail });
+
+    if (user) {
+      const { accountVerificationToken, tokenExpiryDate } = user;
+
+      // Check if the parsed token matches the one stored in the database
+      if (verificationToken === accountVerificationToken) {
+        // Get the current date and time
+        const currentDate = new Date();
+
+        // Options for formatting the date and time
+        const options = {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          timeZoneName: "short",
+        };
+
+        // Format the current date using the options
+        const formattedCurrentDateAndTime = currentDate.toLocaleString(
+          "en-US",
+          options
+        );
+        // const expiryDateandTime = new Date(tokenExpiryDate);
+        // const currentDateandTime = new Date(formattedCurrentDateAndTime);
+
+        if (formattedCurrentDateAndTime <= tokenExpiryDate) {
+          // Mark the user's email as verified in the database
+          user.isEmailVerified = true;
+          await user.save();
+
+          // Return success message
+          res.status(201).json({
+            status: "success",
+            message: "Email Verified Successfully",
+          });
+        } else {
+          // Token has expired
+          res.status(401).json({
+            status: "error",
+            message: "Token has expired.",
+          });
+        }
+      } else {
+        // Token does not match
+        res.status(401).json({
+          status: "error",
+          message: "Invalid token.",
+        });
+      }
+    } else {
+      // User does not exist
+      res.status(404).json({
+        status: "error",
+        message: "User does not exist.",
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    const message = "Email Verification Failed, Please try again later!";
     const errorMessage = getErrorMessage(err, message);
 
     res.status(500).json({

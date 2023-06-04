@@ -4,14 +4,29 @@ const dotenv = require("dotenv");
 // Accessing environment variables using the dotenv package
 dotenv.config({ path: "./config.env" });
 
-exports.generateVerificationToken = function (expirationMinutes) {
+exports.generateVerificationToken = function (minutes) {
   const verificationToken = uuidv4();
-  const tokenExpiration = expirationMinutes;
 
-  // Return an object with the token, status, and expiration time
+  const currentDate = new Date();
+  const tokenExpiration = new Date(currentDate.getTime() + minutes * 60000); // Add specified minutes (minutes * 60,000 milliseconds)
+
+  // Options for formatting the date and time
+  const options = {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    timeZoneName: "short",
+  };
+
+  // Format the expiration date using the options
+  const formattedExpiration = tokenExpiration.toLocaleString("en-US", options);
+
+  // Return an object with the token, status, and formatted expiration time
   return {
     token: verificationToken,
-    expiration: tokenExpiration,
+    expiration: formattedExpiration,
   };
 };
 
