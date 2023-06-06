@@ -60,8 +60,10 @@ const userSchema = new mongoose.Schema({
       message: "Passwords do not much. Try Again!",
     },
   },
+  //email verification token
   accountVerificationToken: String,
   tokenExpiryDate: String,
+  //password fields
   passwordChangedAt: Date,
   passwordResetToken: String,
   passwordResetExpires: Date,
