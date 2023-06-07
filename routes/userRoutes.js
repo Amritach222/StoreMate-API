@@ -8,6 +8,6 @@ const router = express.Router();
 router.post("/signup", authController.signup);
 
 //email verification route
-// router.post("/verify", authController.verify);
+router.get("/verify", authController.verify);
 
 module.exports = router;

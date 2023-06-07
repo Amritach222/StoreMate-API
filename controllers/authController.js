@@ -112,79 +112,10 @@ exports.signup = async (req, res, next) => {
 };
 
 //verify user email
-// exports.verify = async (req, res, next) => {
-//   const userEmail = req.body.email; // Retrieve email from body
-//   const verificationToken = req.query.token; // Retrieve token from query parameters
-
-//   try {
-//     // Retrieve user information from the database based on the provided email
-//     const user = await User.findOne({ email: userEmail });
-
-//     if (user) {
-//       const { accountVerificationToken, tokenExpiryDate } = user;
-
-//       // Check if the parsed token matches the one stored in the database
-//       if (verificationToken === accountVerificationToken) {
-//         // Get the current date and time
-//         const currentDate = new Date();
-
-//         // Options for formatting the date and time
-//         const options = {
-//           year: "numeric",
-//           month: "short",
-//           day: "numeric",
-//           hour: "numeric",
-//           minute: "numeric",
-//           timeZoneName: "short",
-//         };
-
-//         // Format the current date using the options
-//         const formattedCurrentDateAndTime = currentDate.toLocaleString(
-//           "en-US",
-//           options
-//         );
-//         // const expiryDateandTime = new Date(tokenExpiryDate);
-//         // const currentDateandTime = new Date(formattedCurrentDateAndTime);
-
-//         if (formattedCurrentDateAndTime <= tokenExpiryDate) {
-//           // Mark the user's email as verified in the database
-//           user.isEmailVerified = true;
-//           await user.save();
-
-//           // Return success message
-//           res.status(201).json({
-//             status: "success",
-//             message: "Email Verified Successfully",
-//           });
-//         } else {
-//           // Token has expired
-//           res.status(401).json({
-//             status: "error",
-//             message: "Token has expired.",
-//           });
-//         }
-//       } else {
-//         // Token does not match
-//         res.status(401).json({
-//           status: "error",
-//           message: "Invalid token.",
-//         });
-//       }
-//     } else {
-//       // User does not exist
-//       res.status(404).json({
-//         status: "error",
-//         message: "User does not exist.",
-//       });
-//     }
-//   } catch (err) {
-//     console.log(err);
-//     const message = "Email Verification Failed, Please try again later!";
-//     const errorMessage = getErrorMessage(err, message);
-
-//     res.status(500).json({
-//       status: "error",
-//       message: errorMessage,
-//     });
-//   }
-// };
+exports.verify = async (req, res, next) => {
+  // 1)Get user email
+  // 2) get email verification token from the database
+  //3)check token expiry date
+  //if token is valid, update isEmailVerified to true
+  //else return error
+};

@@ -96,12 +96,6 @@ userSchema.pre("save", function (next) {
   next();
 });
 
-// userSchema.pre(/^find/, function (next) {
-//   // this points to the current query
-//   this.find({ active: { $ne: false } });
-//   next();
-// });
-
 //create a User model that serves as an interface between your application and the MongoDB database.
 const User = mongoose.model("User", userSchema);
 
