@@ -112,10 +112,3 @@ exports.signup = async (req, res, next) => {
 };
 
 //verify user email
-exports.verify = async (req, res, next) => {
-  // 1)Get user email
-  // 2) get email verification token from the database
-  //3)check token expiry date
-  //if token is valid, update isEmailVerified to true
-  //else return error
-};
