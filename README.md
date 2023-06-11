@@ -29,28 +29,6 @@
 - Database: MongoDB
 - Browser: Google Chrome (latest version), Mozilla Firefox (latest version), or Safari (latest version) or any other modern browser.
 
-#### Base URL
-
-- The base URL for the API is: `''`
-
-### Authentication
-
-- The API uses token-based authentication. To access the API endpoints, include an Authorization header in your requests with a valid API token.
-
-- Example:
-
-```
-Authorization: Bearer your_api_token
-```
-
-### Endpoints
-
-- `GET /api/v1/products`
-- Description: Retrieve a list of products.
-- Request: GET /api/v1/products
-- Response: Array of products in JSON format.
-- Example Response:
-
 ## How to Run StoreMate (For Developers)
 
 ### Installation
