@@ -1,3 +1,4 @@
+//This code will be required everytime there is need to send an email
 const nodemailer = require("nodemailer");
 const dotenv = require("dotenv");
 const { getErrorMessage } = require("../utils/errorHandler");

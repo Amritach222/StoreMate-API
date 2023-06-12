@@ -22,20 +22,12 @@
 - Mobile access: Support mobile-friendly interface or dedicated mobile app for on-the-go inventory management.
 - Multi-location support: Manage inventory across multiple warehouses or storage locations.
 
-### System Requirements
-
-- To run the Inventory Management System, the following minimum hardware and software requirements should be met:
-
 #### Software Requirements
 
 - Operating System: Windows Os, macOS , or a modern Linux distribution
 - Web Server: Node.js (version 12 or later)
 - Database: MongoDB
 - Browser: Google Chrome (latest version), Mozilla Firefox (latest version), or Safari (latest version) or any other modern browser.
-
-### API Documentation
-
-- The Inventory Management System provides a RESTful API that allows developers to interact with the system programmatically. Below is the documentation for the available endpoints, request/response formats, and authentication/authorization mechanisms.
 
 #### Base URL
 
@@ -59,10 +51,6 @@ Authorization: Bearer your_api_token
 - Response: Array of products in JSON format.
 - Example Response:
 
-```
-
-```
-
 ## How to Run StoreMate (For Developers)
 
 ### Installation
@@ -78,25 +66,22 @@ npm install
 
 3. Edit the `config.env` file and replace the credentials with your own. e.g database connection
 4. Start the application:
-5. Access the application in your browser at `http://localhost:3000`.
+5. Access the endpoints on postman at `http://localhost:3000/api/v1/`.
 
 ### Technologies Used
 
 - Programming Language: [JavaScript]
 - Backend Framework: [Node.js]
-- Frontend Framework: [React]
 - Database: [MongoDB]
-- Additional Libraries and Tools: [Express.js, Bootstrap]
-
-## Test Creds Found At:
-
-```
-https://gist.github.com/makaubenson/429c3021221f8ae2881a7ea48714de04
-```
+- Additional Libraries and Tools: [Express.js]
 
 ## Contributing
 
 Contributions to the Inventory Management System are welcome! If you find any bugs or have suggestions for new features, please open an issue or submit a pull request.
+
+### API Documentation
+
+- TDocumentation URL will be found here.
 
 ## License
 
