@@ -59,7 +59,7 @@ Contributions to the Inventory Management System are welcome! If you find any bu
 
 ### API Documentation
 
-- TDocumentation URL will be found here.
+- The Documentation URL will be found here.
 
 ## License
 
