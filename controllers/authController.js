@@ -111,4 +111,3 @@ exports.signup = async (req, res, next) => {
   }
 };
 
-//verify user email
