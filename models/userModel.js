@@ -5,8 +5,6 @@ const bcrypt = require("bcryptjs");
 
 // creates a new Mongoose schema
 // In mongoDB, a schema defines the structure of documents in a collection.
-// It specifies the fields and their types that a document can have,
-// as well as any additional constraints, default values, or validation rules.
 const userSchema = new mongoose.Schema({
   firstname: {
     type: String,
