@@ -35,7 +35,7 @@ exports.signup = async (req, res, next) => {
     //4) Send verification email.
     // const recipient = "bensonmakau2000@gmail.com";
     const recipient = `${newUser.email}`;
-    const subject = "STOREMATE: Account Verification.";
+    const subject = "StoreMate: Account Verification.";
     const message = `
     <!DOCTYPE html>
     <html lang="en">

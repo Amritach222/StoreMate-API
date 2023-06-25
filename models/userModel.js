@@ -23,6 +23,7 @@ const userSchema = new mongoose.Schema({
   },
   isEmailVerified: {
     type: Boolean,
+    enum: [false, true],
     default: false,
   },
   phone: {
