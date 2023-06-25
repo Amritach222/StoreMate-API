@@ -5,7 +5,8 @@ const dotenv = require("dotenv");
 // Accessing environment variables using the dotenv package
 dotenv.config({ path: "./config.env" });
 
-//importing the app module.App.js is main entry point of your application, where you define routes, middleware, and other functionalities.
+//importing the app module. App.js is main entry point of your application, where you define routes,
+// middleware, and other functionalities.
 const app = require("./app");
 
 //Database Connection URI
