@@ -7,4 +7,7 @@ const router = express.Router();
 //signup route
 router.post("/signup", authController.signup);
 
+//verify email
+// router.post("/verify", authController.verify);
+
 module.exports = router;

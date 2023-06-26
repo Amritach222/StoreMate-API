@@ -1,7 +1,7 @@
 //Import Dependancies
 const express = require("express");
-const morgan = require("morgan");
 const bodyParser = require("body-parser");
+const morgan = require("morgan");
 const userRouter = require("./routes/userRoutes");
 
 //create an instance of the Express.js application.

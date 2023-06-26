@@ -24,8 +24,8 @@ exports.signup = async (req, res, next) => {
       password: req.body.password,
       passwordConfirm: req.body.passwordConfirm,
       //2) Create verification token and share to users email
-      accountVerificationToken: tokenData.token,
-      tokenExpiryDate: tokenData.expiration,
+      verificationToken: tokenData.token,
+      tokenExpiryTime: tokenData.expiration,
     });
 
     // 3) Create a verification link :  Retrieve the base URL dynamically
@@ -111,3 +111,27 @@ exports.signup = async (req, res, next) => {
   }
 };
 
+// //verify email
+// exports.verify = async (req, res, next) => {
+//   const emailVerificationToken = req.body.token;
+//   const emailAddress = req.body.email;
+
+//   try {
+//     const user = await User.findOne({ email: emailAddress });
+
+//     if (!user) {
+//       return res.status(400).send("User does not exist");
+//     }
+
+//     if (user.verificationToken !== emailVerificationToken) {
+//       return res.status(400).send("Invalid verification token");
+//     }
+
+//     user.isEmailVerified = true;
+//     await user.save();
+
+//     return res.status(200).send("Email address verified");
+//   } catch (error) {
+//     return res.status(500).send("Internal server error");
+//   }
+// };
