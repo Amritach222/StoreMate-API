@@ -25,7 +25,7 @@ exports.signup = async (req, res, next) => {
       passwordConfirm: req.body.passwordConfirm,
       //2) Create verification token and share to users email
       accountVerificationToken: tokenData.token,
-      tokenExpiryDate: tokenData.expiration,
+      tokenExpiryTime: tokenData.expiration,
     });
 
     // 3) Create a verification link :  Retrieve the base URL dynamically
