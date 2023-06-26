@@ -21,10 +21,9 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     validate: [validator.isEmail, "Please provide a valid email address"],
   },
-  isEmailVerified: {
-    type: Boolean,
-    enum: [false, true],
-    default: false,
+  verified: {
+     type: Boolean,
+      default: false
   },
   phone: {
     type: String,
@@ -60,7 +59,7 @@ const userSchema = new mongoose.Schema({
     },
   },
   //email verification token
-  accountVerificationToken: String,
+  verificationToken: String,
   tokenExpiryTime: String,
   //password fields
   passwordChangedAt: Date,

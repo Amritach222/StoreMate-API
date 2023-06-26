@@ -20,5 +20,4 @@ exports.generateVerificationToken = function (minutes) {
 // // Token generation: Example usage: Set expiration time to 10 minutes
 // const tokenData = generateVerificationToken(10);
 // console.log(tokenData.token); // Access the generated token
-// console.log(tokenData.status); // Access the token status
 // console.log(tokenData.expiration); // Access the token expiration time
