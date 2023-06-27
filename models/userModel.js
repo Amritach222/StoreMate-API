@@ -8,84 +8,58 @@ const bcrypt = require("bcryptjs");
 const userSchema = new mongoose.Schema({
   firstname: {
     type: String,
-    required: [true, "Please tell us your firstname!"],
+    required: true,
   },
   lastname: {
     type: String,
-    required: [true, "Please tell us your lastname!"],
+    required: true,
   },
   email: {
     type: String,
-    required: [true, "Please provide your email address"],
+    required: true,
     unique: true,
-    lowercase: true,
-    validate: [validator.isEmail, "Please provide a valid email address"],
-  },
-  verified: {
-     type: Boolean,
-      default: false
   },
   phone: {
     type: String,
-    required: [true, "Please provide your phone number"],
-    unique: true,
-    validate: {
-      validator: function (value) {
-        return validator.isMobilePhone(value, "any"); // Validate if it's a mobile phone number
-      },
-      message: "Please provide a valid phone number",
-    },
+    required: true,
   },
   role: {
     type: String,
-    enum: ["customer", "employee", "owner", "admin"],
-    default: "customer",
+    required: true,
   },
   password: {
     type: String,
-    required: [true, "Please provide a password"],
-    minlength: 8,
-    select: false,
+    required: true,
   },
   passwordConfirm: {
     type: String,
-    required: [true, "Please confirm your password"],
+    required: true,
     validate: {
-      // This only works on CREATE and SAVE!!!
-      validator: function (el) {
-        return el === this.password;
+      validator: function (value) {
+        // Custom validation for password confirmation
+        return value === this.password;
       },
-      message: "Passwords do not much. Try Again!",
+      message: 'Password confirmation does not match.',
     },
   },
-  //email verification token
   verificationToken: String,
   tokenExpiryTime: String,
-  //password fields
-  passwordChangedAt: Date,
-  passwordResetToken: String,
-  passwordResetExpires: Date,
-  active: {
-    type: Boolean,
-    default: true,
-    select: false,
-  },
 });
 
 //hash password
-userSchema.pre("save", async function (next) {
-  // If the code has been modified, meaning the "password" field has been changed,
-  // the middleware will continue executing the remaining code.
-  //This typically happens when a new password is set or an existing password is updated.
-  if (!this.isModified("password")) return next();
+// userSchema.pre("save", async function (next) {
+//   // If the code has been modified, meaning the "password" field has been changed,
+//   // the middleware will continue executing the remaining code.
+//   //This typically happens when a new password is set or an existing password is updated.
+//   if (!this.isModified("password")) return next();
 
-  // Hash the password with cost of 12
-  this.password = await bcrypt.hash(this.password, 12);
+//   // Hash the password with cost of 12
+//   this.password = await bcrypt.hash(this.password, 12);
 
-  // Delete passwordConfirm field
-  this.passwordConfirm = undefined;
-  next();
-});
+//   // Delete passwordConfirm field
+//   this.passwordConfirm = undefined;
+//   next();
+// });
 
 //record when password was changed
 userSchema.pre("save", function (next) {
