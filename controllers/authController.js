@@ -27,8 +27,10 @@ exports.signup = async (req, res, next) => {
     // Update the user's verification token and token expiry time
     newUser.verificationToken = token;
     newUser.tokenExpiryTime = Date.now() + 20 * 60 * 1000; // Set token expiry time to 20 minutes
-    
-    await newUser.save();
+
+    // console.log(newUser);
+    //save verificationToken and its expiryTime
+    // await newUser.save();
 
     // Create a verification link with the token
     const baseURL = `${req.protocol}://${req.get('host')}`;
@@ -63,6 +65,7 @@ exports.signup = async (req, res, next) => {
       //send email
     sendEmail(recipient, subject, message);
 
+    //return data
     res.status(201).json({
       status: 'success',
       data: {
