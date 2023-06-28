@@ -128,7 +128,7 @@ exports.login = async (req, res, next) => {
 
   try {
     // Retrieve the user data from the database
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select('+password');
 
     console.log(user);
 
@@ -141,11 +141,16 @@ exports.login = async (req, res, next) => {
     const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (passwordMatch) {
-      // If the passwords match, create a session and set the user as authenticated
-      // req.session.authenticated = true;
-      // req.session.user = { username: user.username };
+          // Generate a JWT token using the user's email and a secret key
+    const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: '20m' });
 
-      res.json({ message: 'User Logged In Successfully!' });
+    //return data
+    res.json({ 
+      status: 'success',
+      token,
+      user,
+     });
+
     } else {
       // If the passwords do not match, return an error message
       res.status(401).json({ error: 'Invalid username or password!' });
