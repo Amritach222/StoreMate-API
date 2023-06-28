@@ -44,6 +44,14 @@ const userSchema = new mongoose.Schema({
   },
   verificationToken: String,
   tokenExpiryTime: String,
+  passwordChangedAt: Date,
+  passwordResetToken: String,
+  passwordResetExpires: Date,
+  active: {
+    type: Boolean,
+    default: true,
+    select: false
+  }
 });
 
 //hash password
