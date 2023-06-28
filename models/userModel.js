@@ -19,6 +19,10 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  isEmailVerified:{
+    type: Boolean,
+    default: false,
+  },
   phone: {
     type: String,
     required: true,
@@ -33,7 +37,7 @@ const userSchema = new mongoose.Schema({
   },
   passwordConfirm: {
     type: String,
-    required: true,
+    required: false,
     validate: {
       validator: function (value) {
         // Custom validation for password confirmation
