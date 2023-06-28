@@ -27,12 +27,14 @@ exports.signup = async (req, res, next) => {
     // Update the user's verification token and token expiry time
     newUser.verificationToken = token;
     newUser.tokenExpiryTime = Date.now() + 20 * 60 * 1000; // Set token expiry time to 20 minutes
-    
-    await newUser.save();
+
+    // console.log(newUser);
+    //save verificationToken and its expiryTime
+    // await newUser.save();
 
     // Create a verification link with the token
     const baseURL = `${req.protocol}://${req.get('host')}`;
-    const verificationLink = `${baseURL}/verify?token=${token}`;
+    const verificationLink = `${baseURL}/api/v1/users/verify?token=${token}`;
 
     // Prepare and send the verification email
     const recipient = newUser.email;
@@ -63,6 +65,7 @@ exports.signup = async (req, res, next) => {
       //send email
     sendEmail(recipient, subject, message);
 
+    //return data
     res.status(201).json({
       status: 'success',
       data: {
@@ -77,5 +80,35 @@ exports.signup = async (req, res, next) => {
       status: 'error',
       message: errorMessage,
     });
+  }
+};
+
+//verify user email
+exports.verify = async (req, res, next) => {
+  // Get the token from the request query parameters.
+  const token = req.query.token;
+
+  // Verify the token.
+  try {
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    // console.log(decodedToken);
+
+    const userEmail= decodedToken.email;
+
+    // Check if the user is found in the database.
+    const user = await User.findOne({email: userEmail});
+    console.log(user);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Update the user's email verification status in the database.
+    user.isEmailVerified = true;
+    await user.save();
+
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(401).json({ error: error.message });
   }
 };

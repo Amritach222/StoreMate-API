@@ -19,6 +19,10 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  isEmailVerified:{
+    type: Boolean,
+    default: false,
+  },
   phone: {
     type: String,
     required: true,
@@ -33,7 +37,7 @@ const userSchema = new mongoose.Schema({
   },
   passwordConfirm: {
     type: String,
-    required: true,
+    required: false,
     validate: {
       validator: function (value) {
         // Custom validation for password confirmation
@@ -44,22 +48,30 @@ const userSchema = new mongoose.Schema({
   },
   verificationToken: String,
   tokenExpiryTime: String,
+  passwordChangedAt: Date,
+  passwordResetToken: String,
+  passwordResetExpires: Date,
+  active: {
+    type: Boolean,
+    default: true,
+    select: false
+  }
 });
 
 //hash password
-// userSchema.pre("save", async function (next) {
-//   // If the code has been modified, meaning the "password" field has been changed,
-//   // the middleware will continue executing the remaining code.
-//   //This typically happens when a new password is set or an existing password is updated.
-//   if (!this.isModified("password")) return next();
+userSchema.pre("save", async function (next) {
+  // If the code has been modified, meaning the "password" field has been changed,
+  // the middleware will continue executing the remaining code.
+  //This typically happens when a new password is set or an existing password is updated.
+  if (!this.isModified("password")) return next();
 
-//   // Hash the password with cost of 12
-//   this.password = await bcrypt.hash(this.password, 12);
+  // Hash the password with cost of 12
+  this.password = await bcrypt.hash(this.password, 12);
 
-//   // Delete passwordConfirm field
-//   this.passwordConfirm = undefined;
-//   next();
-// });
+  // Delete passwordConfirm field
+  this.passwordConfirm = undefined;
+  next();
+});
 
 //record when password was changed
 userSchema.pre("save", function (next) {
