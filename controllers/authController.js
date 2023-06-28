@@ -130,7 +130,7 @@ exports.login = async (req, res, next) => {
     // Retrieve the user data from the database
     const user = await User.findOne({ email }).select('+password');
 
-    console.log(user);
+    // console.log(user);
 
     if (!user) {
       // If the user is not found, return an error message
@@ -157,7 +157,19 @@ exports.login = async (req, res, next) => {
     }
   } catch (error) {
     // Handle any errors that occur during the database operation
-    console.error(error);
+    // console.error(error);
     res.status(500).json({ error: 'Server Error' });
   }
+};
+
+//logout
+exports.logout = (req, res) => {
+  // Set the 'jwt' cookie to 'loggedout' and configure its options
+  res.cookie('jwt', 'loggedout', {
+    expires: new Date(Date.now() + 5 * 1000), // Set the cookie expiration time (in this case, 5 seconds from the current time)
+    httpOnly: true, // Make the cookie accessible only through HTTP(S) requests and not by client-side JavaScript
+  });
+
+  // Send a successful response indicating that the user has been logged out
+  res.status(200).json({ status: 'success' });
 };
