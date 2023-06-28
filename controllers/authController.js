@@ -73,7 +73,7 @@ exports.signup = async (req, res, next) => {
       },
     });
   } catch (err) {
-    const message = 'Something went wrong. Signup failed. Please try again later!';
+    const message = 'Error!, signup operation failed!. Try again Later.';
     const errorMessage = getErrorMessage(err, message);
 
     res.status(500).json({
@@ -108,7 +108,47 @@ exports.verify = async (req, res, next) => {
     await user.save();
 
     res.status(200).json(user);
-  } catch (error) {
-    res.status(401).json({ error: error.message });
+  } catch (err) {
+    const message = 'Verification Failed!.';
+    const errorMessage = getErrorMessage(err, message);
+
+    res.status(401).json({
+      status: 'error',
+      message: errorMessage,
+    });
   }
 };
+
+//login
+// app.post('/login', async (req, res) => {
+//   // Get the user's credentials from the request body
+//   const { username, password } = req.body;
+
+//   try {
+//     // Retrieve the user data from the database
+//     const user = await User.findOne({ username });
+
+//     if (!user) {
+//       // If the user is not found, return an error message
+//       return res.status(401).json({ error: 'User not Found!' });
+//     }
+
+//     // Compare the password provided by the user with the hashed password in the database
+//     const passwordMatch = await bcrypt.compare(password, user.password);
+
+//     if (passwordMatch) {
+//       // If the passwords match, create a session and set the user as authenticated
+//       req.session.authenticated = true;
+//       req.session.user = { username: user.username };
+
+//       res.json({ message: 'Login successful' });
+//     } else {
+//       // If the passwords do not match, return an error message
+//       res.status(401).json({ error: 'Invalid credentials' });
+//     }
+//   } catch (error) {
+//     // Handle any errors that occur during the database operation
+//     console.error(error);
+//     res.status(500).json({ error: 'Server error' });
+//   }
+// });
