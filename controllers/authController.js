@@ -3,6 +3,9 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 const { getErrorMessage } = require("../utils/errorHandler");
 const sendEmail = require("../utils/email");
+const bcrypt = require('bcryptjs');
+
+
 
 // Accessing environment variables using the dotenv package
 dotenv.config({ path: "./config.env" });
@@ -111,7 +114,6 @@ exports.verify = async (req, res, next) => {
   } catch (err) {
     const message = 'Verification Failed!.';
     const errorMessage = getErrorMessage(err, message);
-
     res.status(401).json({
       status: 'error',
       message: errorMessage,
@@ -120,35 +122,42 @@ exports.verify = async (req, res, next) => {
 };
 
 //login
-// app.post('/login', async (req, res) => {
-//   // Get the user's credentials from the request body
-//   const { username, password } = req.body;
+exports.login = async (req, res, next) => {
+  // Get the user's credentials from the request body
+  const { email, password } = req.body;
 
-//   try {
-//     // Retrieve the user data from the database
-//     const user = await User.findOne({ username });
+  try {
+    // Retrieve the user data from the database
+    const user = await User.findOne({ email }).select('+password');
 
-//     if (!user) {
-//       // If the user is not found, return an error message
-//       return res.status(401).json({ error: 'User not Found!' });
-//     }
+    console.log(user);
 
-//     // Compare the password provided by the user with the hashed password in the database
-//     const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!user) {
+      // If the user is not found, return an error message
+      return res.status(401).json({ error: 'User not Found!' });
+    }
 
-//     if (passwordMatch) {
-//       // If the passwords match, create a session and set the user as authenticated
-//       req.session.authenticated = true;
-//       req.session.user = { username: user.username };
+    // Compare the password provided by the user with the hashed password in the database
+    const passwordMatch = await bcrypt.compare(password, user.password);
 
-//       res.json({ message: 'Login successful' });
-//     } else {
-//       // If the passwords do not match, return an error message
-//       res.status(401).json({ error: 'Invalid credentials' });
-//     }
-//   } catch (error) {
-//     // Handle any errors that occur during the database operation
-//     console.error(error);
-//     res.status(500).json({ error: 'Server error' });
-//   }
-// });
+    if (passwordMatch) {
+          // Generate a JWT token using the user's email and a secret key
+    const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: '20m' });
+
+    //return data
+    res.json({ 
+      status: 'success',
+      token,
+      user,
+     });
+
+    } else {
+      // If the passwords do not match, return an error message
+      res.status(401).json({ error: 'Invalid username or password!' });
+    }
+  } catch (error) {
+    // Handle any errors that occur during the database operation
+    console.error(error);
+    res.status(500).json({ error: 'Server Error' });
+  }
+};

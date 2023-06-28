@@ -10,4 +10,7 @@ router.post("/signup", authController.signup);
 //verify email
 router.get("/verify", authController.verify);
 
+//login user
+router.post("/login", authController.login);
+
 module.exports = router;
