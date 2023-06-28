@@ -2,7 +2,6 @@ const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 const { getErrorMessage } = require("../utils/errorHandler");
-const { generateVerificationToken } = require("../utils/generateToken");
 const sendEmail = require("../utils/email");
 
 // Accessing environment variables using the dotenv package
@@ -11,10 +10,7 @@ dotenv.config({ path: "./config.env" });
 //signup user
 exports.signup = async (req, res, next) => {
   try {
-    // Call the generateVerificationToken function using the object reference and generate a verification TOKEN
-    const tokenData = generateVerificationToken(process.env.tokenExpiryMinutes);
-
-    //1) create a new user in the MongoDB database
+    // Create a new user in the MongoDB database
     const newUser = await User.create({
       firstname: req.body.firstname,
       lastname: req.body.lastname,
@@ -23,115 +19,63 @@ exports.signup = async (req, res, next) => {
       role: req.body.role,
       password: req.body.password,
       passwordConfirm: req.body.passwordConfirm,
-      //2) Create verification token and share to users email
-      verificationToken: tokenData.token,
-      tokenExpiryTime: tokenData.expiration,
     });
+    
+    // Generate a JWT token using the user's email and a secret key
+    const token = jwt.sign({ email: newUser.email }, process.env.JWT_SECRET, { expiresIn: '20m' });
+    
+    // Update the user's verification token and token expiry time
+    newUser.verificationToken = token;
+    newUser.tokenExpiryTime = Date.now() + 20 * 60 * 1000; // Set token expiry time to 20 minutes
+    
+    await newUser.save();
 
-    // 3) Create a verification link :  Retrieve the base URL dynamically
-    const baseURL = `${req.protocol}://${req.get("host")}`;
-    const verificationLink = `${baseURL}/verify?token=${newUser.accountVerificationToken}`;
+    // Create a verification link with the token
+    const baseURL = `${req.protocol}://${req.get('host')}`;
+    const verificationLink = `${baseURL}/verify?token=${token}`;
 
-    //4) Send verification email.
-    // const recipient = "bensonmakau2000@gmail.com";
-    const recipient = `${newUser.email}`;
-    const subject = "StoreMate: Account Verification.";
-    const message = `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Welcome to our platform</title>
-      <style>
-      /* Define your styles here */
-      body {
-        font-family: Arial, sans-serif;
-        line-height: 1.5;
-        color: #333;
-      }
-      .container {
-        max-width: 600px;
-        margin: 0 auto;
-        padding: 20px;
-      }
-      h1 {
-        color: #007bff;
-      }
-      p {
-        margin-bottom: 20px;
-      }
-      .button {
-        display: inline-block;
-        padding: 10px 20px;
-        background-color: #007bff;
-        color: white;
-        text-decoration: none;
-        border-radius: 4px;
-      }
-      .button:hover {
-        background-color: black;
-      }
-      </style>
-    </head>
-    <body>
-      <div class="container">
+    // Prepare and send the verification email
+    const recipient = newUser.email;
+    const subject = 'StoreMate: Account Verification';
+    const message = `<!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Welcome to our platform</title>
+        <style>
+          /* Define your styles here */
+        </style>
+      </head>
+      <body>
         <h1>Welcome to StoreMate!</h1>
-        <p>Dear ${newUser.firstname}  ${newUser.lastname},</p>
+        <p>Dear ${newUser.firstname},</p>
         <p>Thank you for signing up with our platform. We're excited to have you on board!</p>
         <p>To get started, please click on the button below to verify your email address:</p>
-        <p><a class="button" href="${verificationLink}"style="color:white;">Verify Email</a></p>
+        <p><a href="${verificationLink}">Verify Email</a></p>
         <p>If you did not sign up for our platform, please ignore this email.</p>
         <p>Thank you again, and we look forward to helping you keep track of your inventory as well as sales.</p>
         <p>Sincerely,</p>
         <p>Blinx Corporation Team</p>
-      </div>
-    </body>
-    </html>
-  `;
+      </body>
+      </html>`;
 
-    // Send Email to request verification
+      //send email
     sendEmail(recipient, subject, message);
 
     res.status(201).json({
-      status: "success",
+      status: 'success',
       data: {
-        user: newUser,
+        user: newUser
       },
     });
   } catch (err) {
-    const message =
-      "Something Went Wrong. Signup Failed, Please try again later!";
+    const message = 'Something went wrong. Signup failed. Please try again later!';
     const errorMessage = getErrorMessage(err, message);
 
     res.status(500).json({
-      status: "error",
+      status: 'error',
       message: errorMessage,
     });
   }
 };
-
-// //verify email
-// exports.verify = async (req, res, next) => {
-//   const emailVerificationToken = req.body.token;
-//   const emailAddress = req.body.email;
-
-//   try {
-//     const user = await User.findOne({ email: emailAddress });
-
-//     if (!user) {
-//       return res.status(400).send("User does not exist");
-//     }
-
-//     if (user.verificationToken !== emailVerificationToken) {
-//       return res.status(400).send("Invalid verification token");
-//     }
-
-//     user.isEmailVerified = true;
-//     await user.save();
-
-//     return res.status(200).send("Email address verified");
-//   } catch (error) {
-//     return res.status(500).send("Internal server error");
-//   }
-// };
