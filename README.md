@@ -53,14 +53,6 @@ npm install
 - Database: [MongoDB]
 - Additional Libraries and Tools: [Express.js]
 
-## Contributing
-
-Contributions to the Inventory Management System are welcome! If you find any bugs or have suggestions for new features, please open an issue or submit a pull request.
-
-### API Documentation
-
-- The Documentation URL will be found here.
-
 ## License
 
 This project is licensed under the [GNU GENERAL PUBLIC LICENSE](LICENSE).
